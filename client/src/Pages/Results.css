@@ -1,0 +1,14 @@
+.Results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#dark .table {
+    color: white
+}
+
+#dark .table-hover thead tr:hover th, #dark .table-hover tbody tr:hover td {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgb(33,37,41);
+}

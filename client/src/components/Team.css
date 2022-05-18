@@ -1,0 +1,17 @@
+.Team {
+    color:black;
+    text-decoration: none;
+}
+
+.Team:hover {
+    font-size: large;
+    color: black;
+}
+
+#dark .Team {
+    color: white
+}
+
+#dark .Team:hover {
+    font-size: large;
+}

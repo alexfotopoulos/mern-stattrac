@@ -1,0 +1,39 @@
+.navbar-favoritesList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.navbar-favoritesList .dropdownLink {
+    padding-left: 1rem;
+    margin-bottom: .5rem;
+}
+
+.navbar-favoritesList .dropdownLink:last-child {
+    padding-left: 1rem;
+    margin-bottom: 0;
+}
+
+.dropdownLink {
+    color:black;
+    text-decoration: none;
+}
+
+.dropdownLink:hover {
+    color: black;
+}
+
+#toggleSwitch {
+    margin-left: auto;
+}
+#toggleSwitch input:hover {
+    cursor: pointer;
+}
+
+#dark ul.dropdown-menu.show {
+    background-color: rgb(33,37,41);
+}
+
+#dark .dropdownLink {
+    color:white
+}
