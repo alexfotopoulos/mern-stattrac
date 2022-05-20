@@ -15,7 +15,7 @@ export default function Results() {
     //useParams to store the selected school
     const params = useParams()
     //state to track whether the current team is favorited
-    const [isFavorite, setIsFavorite] = useState(null)
+    const [isFavorite, setIsFavorite] = useState(false)
 
 
     //call backend API to fetch players from the selected school
@@ -42,14 +42,7 @@ export default function Results() {
         if (!isFavorite) {
             favoritesCtx.addFavorite(params.collegeTeam)
         } else {
-            let deleteId
-            for (let i = 0; i < favoritesCtx.favorites.length; i++) {
-                if (favoritesCtx.favorites[i].name === params.collegeTeam) {
-                    deleteId = favoritesCtx.favorites[i].id
-                    break
-                }
-            }
-            favoritesCtx.deleteFavorite(params.collegeTeam, deleteId)
+            favoritesCtx.deleteFavorite(params.collegeTeam)
         }
     }
 
@@ -69,8 +62,8 @@ export default function Results() {
         <div className="Results">
             <div className="Results-header mb-3">
             <h2 >{params.collegeTeam.toUpperCase()}</h2>
-            <div onClick={toggleFavorite} className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked={isFavorite} />
+            <div className="form-check">
+                <input className="form-check-input" onChange={toggleFavorite} type="checkbox" value={isFavorite} id="flexCheckDefault" checked={isFavorite} />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
                     {isFavorite ? "Remove from favorites" : "Add to favorites"}
                 </label>

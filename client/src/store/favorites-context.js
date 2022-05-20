@@ -16,50 +16,43 @@ export function FavoritesContextProvider(props) {
     //refresh state to trigger useEffect of Results page when switching from favorite to favorites
     const [refresh, setRefresh] = useState(false)
 
-    //function to add favorite to firebase and favorites state
-    async function handleAddFavorite(team) {
-        let response = await axios({
-            method: 'post',
-            url: 'https://react-stattrac-default-rtdb.firebaseio.com/favorites.json',
-            data: { name: team },
-            headers: { 'Content-type': 'application/json' }
-        });
-        //create object to store id from firebase and name of new team
-        let newTeam = {
-            id: response.data.name,
-            name: team
-        }
-        setFavorites(prevFavorites => [...prevFavorites, newTeam])
-    }
-    //function to delete favorite to firebase and favorites state
-    async function handleDeleteFavorite(team, id) {
-        let response = await axios({
-            method: 'delete',
-            url: `https://react-stattrac-default-rtdb.firebaseio.com/favorites/${id}.json`,
-            headers: { 'Content-type': 'application/json' }
-        })
-        //delete favorite
-        setFavorites(prevFavorites => prevFavorites.filter(filterTeam => filterTeam.name !== team))
-    }
-    //function to fetch favorites from firebase and set favorites state
+    //function to fetch favorites from mongoDB and set favorites state
     async function handleFetchFavorites() {
         let response = await axios({
             method: 'get',
-            url: `https://react-stattrac-default-rtdb.firebaseio.com/favorites.json`,
+            url: `/favorites`,
         })
         //create empty array to store team objects consisting of id and name
         let faves = []
         for (let fave in response.data) {
-            //create new object consisting of id and name
-            let newObject = {
-                id: fave,
-                name: response.data[fave].name
-            }
             //push new object to empty array
-            faves.push(newObject)
+            faves.push(response.data[fave])
         }
         //set favorites to be array of team objects
         setFavorites(faves)
+    }
+    //function to add favorite to mongoDB and favorites state
+    async function handleAddFavorite(team) {
+        let response = await axios({
+            method: 'post',
+            url: '/favorites',
+            data: { favorite: team },
+            headers: { 'Content-type': 'application/json' }
+        });
+        //create object to add new team to state
+        let newTeam = response.data.favorite
+        setFavorites(prevFavorites => [...prevFavorites, newTeam])
+    }
+    //function to delete favorite from mongoDB and favorites state
+    async function handleDeleteFavorite(team) {
+        let response = await axios({
+            method: 'delete',
+            url: '/favorites',
+            data: { favorite: team },
+            headers: { 'Content-type': 'application/json' }
+        });
+        //delete favorite from state
+        setFavorites(prevFavorites => prevFavorites.filter(filterTeam => filterTeam.name !== team))
     }
     //function to change refresh state and trigger useEffect on Results page
     function handleToggleRefresh() {

@@ -37,7 +37,7 @@ export default function Nav() {
         content = <li>No favorites</li>
     } else {
         content = favoritesCtx.favorites.map(team => (
-            <Link className="dropdownLink" onClick={handleToggleRefresh} key={team.id} to={`/${team.name}`}>{team.name}</Link>
+            <Link className="dropdownLink" onClick={handleToggleRefresh} key={team._id} to={`/${team.name}`}>{team.name}</Link>
         ))
     }
     return (

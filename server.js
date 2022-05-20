@@ -1,9 +1,11 @@
 const express = require("express")
+const mongoose = require('mongoose')
 const axios = require("axios")
 const cors = require("cors")
 const PORT = process.env.PORT || 8000
 const path = require("path")
 require("dotenv").config()
+const favoritesRoutes = require("./routes/favoritesRoutes")
 
 const app = express()
 app.use(cors())
@@ -18,6 +20,9 @@ const fetchPlayerData = async () => {
 };
 fetchPlayerData();
 
+app.use(express.json())
+app.use('/favorites', favoritesRoutes)
+
 //when frontend calls the following route
 app.get("/playerData", async (req, res) => {
     //backend responds with data collected from fantasydata.com
@@ -25,7 +30,7 @@ app.get("/playerData", async (req, res) => {
 })
 
 //serve static assets if in production
-if(process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 
     app.get("*", (req, res) => {
@@ -33,7 +38,14 @@ if(process.env.NODE_ENV === "production") {
     })
 }
 
-//backend is listening on port 8000
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
+//connect to mongo database
+mongoose
+.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USERNAME}:${process.env.MONGO_ATLAS_PASSWORD}@cluster0.tnlau.mongodb.net/test?retryWrites=true&w=majority`)
+.then(
+    //backend is listening on port 8000 in development
+    app.listen(PORT, () => {
+        console.log(`Listening on port ${PORT}`)
+    }))
+.catch(err => {
+    console.log(err)
 })
