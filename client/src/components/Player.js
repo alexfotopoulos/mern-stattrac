@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 import "./Player.css"
-import { teamPairs } from '../helpers'
+import { teamPairs } from "../helpers"
 
 export default function Player({ player }) {
   return (

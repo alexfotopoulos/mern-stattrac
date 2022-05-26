@@ -1,16 +1,20 @@
 import React, { useContext, useState } from "react"
+import axios from "axios"
 import { Link } from "react-router-dom"
 import "./Nav.css"
 import FavoritesContext from "../store/favorites-context"
 import ThemeContext from "../store/theme-context"
+import AuthContext from "../store/auth-context"
 
 export default function Nav() {
+    //consume auth context
+    const authCtx = useContext(AuthContext)
 
     //consume favorites context
-    let favoritesCtx = useContext(FavoritesContext)
+    const favoritesCtx = useContext(FavoritesContext)
 
     //consume theme context
-    let themeCtx = useContext(ThemeContext)
+    const themeCtx = useContext(ThemeContext)
 
     //state to determine toggle light or dark
     const [isDarkMode, setIsDarkMode] = useState(null)
@@ -31,14 +35,23 @@ export default function Nav() {
         themeCtx.toggleTheme()
     }
 
+    //function to log user out
+    async function logout() {
+        authCtx.logout()
+    }
+
     //create Links in dropdown for favorited teams
     let content
-    if (favoritesCtx.favorites.length === 0) {
-        content = <li>No favorites</li>
+    if (!authCtx.token) {
+        content = <li>Login to add favorites</li>
     } else {
-        content = favoritesCtx.favorites.map(team => (
-            <Link className="dropdownLink" onClick={handleToggleRefresh} key={team._id} to={`/${team.name}`}>{team.name}</Link>
-        ))
+        if (favoritesCtx.favorites.length === 0) {
+            content = <li>You have no favorites</li>
+        } else {
+            content = favoritesCtx.favorites.map(team => (
+                <Link className="dropdownLink" onClick={handleToggleRefresh} key={team._id} to={`/teams/${team.name}`}>{team.name}</Link>
+            ))
+        }
     }
     return (
         <nav className={`navbar navbar-expand-md navbar-${themeCtx.theme === "light" ? "light" : "dark"} bg-${themeCtx.theme === "light" ? "light" : "dark"} sticky-top mb-4`}>
@@ -65,6 +78,17 @@ export default function Nav() {
                         <li className="nav-item">
                             <a className="nav-link" href="https://www.nfl.com/" target="_blank">NFL.com</a>
                         </li>
+                    </ul>
+                    <ul className="navbar-nav Nav-authButtons">
+                        {!authCtx.token && <li className="nav-item">
+                            <Link className="nav-link" to="/users/register">Register</Link>
+                        </li>}
+                        {!authCtx.token && <li className="nav-item">
+                            <Link className="nav-link" to="/users/login">Login</Link>
+                        </li>}
+                        {authCtx.token && <li className="nav-item">
+                            <Link onClick={logout} className="nav-link" to="/">Logout</Link>
+                        </li>}
                     </ul>
                     <div id="toggleSwitch" onClick={toggleMode} className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={isDarkMode} />

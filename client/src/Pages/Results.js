@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from "react"
 import "./Results.css"
-import { useParams } from 'react-router-dom'
-
-import { fetchPlayerData } from '../helpers'
-import Player from '../components/Player'
-
-import FavoritesContext from '../store/favorites-context'
+import { useParams } from "react-router-dom"
+import { fetchPlayerData } from "../helpers"
+import Player from "../components/Player"
+import FavoritesContext from "../store/favorites-context"
+import AuthContext from "../store/auth-context"
 
 export default function Results() {
+    //consume auth context
+    const authCtx = useContext(AuthContext)
     //consume favorites context
     const favoritesCtx = useContext(FavoritesContext)
     //create empty array for players
@@ -26,15 +27,17 @@ export default function Results() {
         }
         getData()
     }, [favoritesCtx.refresh])
-    //determine whether the current team is favorited
+    //determine whether the current team is favorited is user is logged in
     useEffect(() => {
-        let favorited = false
-        for (let i = 0; i < favoritesCtx.favorites.length; i++) {
-            if (favoritesCtx.favorites[i].name === params.collegeTeam) {
-                favorited = true
+        if (authCtx.token) {
+            let favorited = false
+            for (let i = 0; i < favoritesCtx.favorites.length; i++) {
+                if (favoritesCtx.favorites[i].name === params.collegeTeam) {
+                    favorited = true
+                }
             }
+            setIsFavorite(favorited)
         }
-        setIsFavorite(favorited)
     }, [favoritesCtx.favorites, favoritesCtx.refresh])
 
     //toggle whether team is favorited
@@ -61,13 +64,13 @@ export default function Results() {
     return (
         <div className="Results">
             <div className="Results-header mb-3">
-            <h2 >{params.collegeTeam.toUpperCase()}</h2>
-            <div className="form-check">
-                <input className="form-check-input" onChange={toggleFavorite} type="checkbox" value={isFavorite} id="flexCheckDefault" checked={isFavorite} />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                    {isFavorite ? "Remove from favorites" : "Add to favorites"}
-                </label>
-            </div>
+                <h2 >{params.collegeTeam.toUpperCase()}</h2>
+                {authCtx.token && <div className="form-check">
+                    <input className="form-check-input" onChange={toggleFavorite} type="checkbox" value={isFavorite} id="flexCheckDefault" checked={isFavorite} />
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        {isFavorite ? "Remove from favorites" : "Add to favorites"}
+                    </label>
+                </div>}
             </div>
             <table className="table table-hover">
                 <thead>

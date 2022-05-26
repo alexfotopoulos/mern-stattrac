@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import './Homepage.css'
-
+import React, { useState, useEffect } from "react"
+import "./Homepage.css"
 import Team from "../components/Team";
 import { fetchTeamData } from "../helpers";
 

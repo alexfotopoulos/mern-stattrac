@@ -4,6 +4,6 @@ import "./Team.css"
 
 export default function Team(props) {
   return (
-    <p><Link className="Team" to={`/${props.team}`}>{props.team}</Link></p>
+    <p><Link className="Team" to={`/teams/${props.team}`}>{props.team}</Link></p>
   )
 }

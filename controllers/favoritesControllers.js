@@ -5,7 +5,7 @@ const fetchFavorites = async (req, res, next) => {
     let favorites
     try {
         favorites = await Favorite.find()
-    } catch(err) {
+    } catch (err) {
         return next(err)
     }
     if (!favorites) {
@@ -15,21 +15,21 @@ const fetchFavorites = async (req, res, next) => {
 }
 //controller to add to favorites
 const addToFavorites = async (req, res, next) => {
-    let {favorite} = req.body
-    let newFavorite = new Favorite({name: favorite})
+    let { favorite } = req.body
+    let newFavorite = new Favorite({ name: favorite })
     try {
         await newFavorite.save()
-    } catch(err) {
+    } catch (err) {
         return next(err)
     }
     res.status(201).json({ favorite: newFavorite });
 }
 //controller to delete from favorites
 const deleteFromFavorites = async (req, res, next) => {
-    let {favorite} = req.body
+    let { favorite } = req.body
     try {
-        await Favorite.deleteOne({name: favorite})
-    } catch(err) {
+        await Favorite.deleteOne({ name: favorite })
+    } catch (err) {
         return next(err)
     }
     res.status(200).json({ deletedFavorite: favorite });

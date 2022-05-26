@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from "axios"
 
 //list of player statuses for which players should be returned
-const statusList = ['Active', 'Injured Reserve', 'Physically Unable to Perform', 'Practice Squad', 'Suspended', 'Non Football Injury', 'Non-Football Illness', 'Commissioner Exempt List', 'Exempt/Left Team', 'Paternity', 'Bereavement', 'Reserve/COVID-19', 'Voluntary Opt Out'];
+const statusList = ["Active", "Injured Reserve", "Physically Unable to Perform", "Practice Squad", "Suspended", "Non Football Injury", "Non-Football Illness", "Commissioner Exempt List", "Exempt/Left Team", "Paternity", "Bereavement", "Reserve/COVID-19", "Voluntary Opt Out"];
 
 //helper function to fetch the applicable college teams
 export async function fetchTeamData() {
@@ -12,7 +12,7 @@ export async function fetchTeamData() {
     //iterate through API response
     for (let player of res.data) {
         //if the player is an applicable status and went to a US college
-        if (statusList.includes(player.Status) && player.College !== 'None') {
+        if (statusList.includes(player.Status) && player.College !== "None") {
             //push team to activeTeams array
             activeTeams.push(player.College.trim())
         }

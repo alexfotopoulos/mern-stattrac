@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const checkAuth = require("../middleware/checkAuth")
 
 const favoritesControllers = require("../controllers/favoritesControllers")
+
+//protect favorites routes
+router.use(checkAuth)
 
 //route to fetch favorites
 router.get("/", favoritesControllers.fetchFavorites)

@@ -1,11 +1,12 @@
 const express = require("express")
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const axios = require("axios")
 const cors = require("cors")
 const PORT = process.env.PORT || 8000
 const path = require("path")
 require("dotenv").config()
 const favoritesRoutes = require("./routes/favoritesRoutes")
+const usersRoutes = require("./routes/usersRoutes")
 
 const app = express()
 app.use(cors())
@@ -18,10 +19,12 @@ const fetchPlayerData = async () => {
     //save response data to playerData array
     playerData = response.data
 };
-fetchPlayerData();
+// fetchPlayerData();
 
 app.use(express.json())
+
 app.use('/favorites', favoritesRoutes)
+app.use('/users', usersRoutes)
 
 //when frontend calls the following route
 app.get("/playerData", async (req, res) => {
@@ -40,12 +43,12 @@ if (process.env.NODE_ENV === "production") {
 
 //connect to mongo database
 mongoose
-.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USERNAME}:${process.env.MONGO_ATLAS_PASSWORD}@cluster0.tnlau.mongodb.net/test?retryWrites=true&w=majority`)
-.then(
-    //backend is listening on port 8000 in development
-    app.listen(PORT, () => {
-        console.log(`Listening on port ${PORT}`)
-    }))
-.catch(err => {
-    console.log(err)
-})
+    .connect(`mongodb+srv://${process.env.MONGO_ATLAS_USERNAME}:${process.env.MONGO_ATLAS_PASSWORD}@cluster0.tnlau.mongodb.net/test?retryWrites=true&w=majority`)
+    .then(
+        //backend is listening on port 8000 in development
+        app.listen(PORT, () => {
+            console.log(`Listening on port ${PORT}`)
+        }))
+    .catch(err => {
+        console.log(err)
+    })

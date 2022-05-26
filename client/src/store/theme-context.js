@@ -14,7 +14,7 @@ export function ThemeContextProvider(props) {
     function handleToggleTheme() {
         setTheme(prevTheme => prevTheme === "light" ? "dark" : "light")
     }
-    
+
     //context to be provided to children
     const context = {
         theme,

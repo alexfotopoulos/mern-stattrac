@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
-import axios from 'axios'
+import { createContext, useState, useContext } from "react";
+import AuthContext from "./auth-context";
+import axios from "axios"
 
 const FavoritesContext = createContext({
     favorites: [],
@@ -11,6 +12,8 @@ const FavoritesContext = createContext({
 });
 
 export function FavoritesContextProvider(props) {
+    //consume auth context
+    const authCtx = useContext(AuthContext)
     //state to store the favorites
     const [favorites, setFavorites] = useState([])
     //refresh state to trigger useEffect of Results page when switching from favorite to favorites
@@ -21,6 +24,7 @@ export function FavoritesContextProvider(props) {
         let response = await axios({
             method: 'get',
             url: `/favorites`,
+            headers: { "Authorization": `Bearer ${authCtx.token}` }
         })
         //create empty array to store team objects consisting of id and name
         let faves = []
@@ -37,7 +41,7 @@ export function FavoritesContextProvider(props) {
             method: 'post',
             url: '/favorites',
             data: { favorite: team },
-            headers: { 'Content-type': 'application/json' }
+            headers: { 'Content-type': 'application/json', "Authorization": `Bearer ${authCtx.token}` }
         });
         //create object to add new team to state
         let newTeam = response.data.favorite
@@ -49,7 +53,7 @@ export function FavoritesContextProvider(props) {
             method: 'delete',
             url: '/favorites',
             data: { favorite: team },
-            headers: { 'Content-type': 'application/json' }
+            headers: { 'Content-type': 'application/json', "Authorization": `Bearer ${authCtx.token}` }
         });
         //delete favorite from state
         setFavorites(prevFavorites => prevFavorites.filter(filterTeam => filterTeam.name !== team))
@@ -58,7 +62,7 @@ export function FavoritesContextProvider(props) {
     function handleToggleRefresh() {
         setRefresh(prevRefresh => !prevRefresh)
     }
-    
+
     //context to be provided to children
     const context = {
         favorites,
