@@ -26,8 +26,9 @@ export default function App() {
       authCtx.token = storedData.token
       authCtx.userId = storedData.userId
       favoritesCtx.fetchFavorites()
+      console.log("IN USE EFFECT OF APP")
     }
-  }, [authCtx, favoritesCtx])
+  }, [authCtx.token])
 
 
   return (

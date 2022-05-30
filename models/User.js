@@ -8,7 +8,12 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    favorites: [{
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: "Favorite"
+    }]
 })
 
 const User = mongoose.model("User", userSchema)

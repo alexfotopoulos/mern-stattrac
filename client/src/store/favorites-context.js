@@ -21,10 +21,12 @@ export function FavoritesContextProvider(props) {
 
     //function to fetch favorites from mongoDB and set favorites state
     async function handleFetchFavorites() {
+        const userData = JSON.parse(localStorage.getItem("userData"))
+        console.log(userData.userId, "USERDATA")
         let response = await axios({
             method: 'get',
             url: `/favorites`,
-            headers: { "Authorization": `Bearer ${authCtx.token}` }
+            headers: { "Authorization": `Bearer ${authCtx.token}`, userId: userData.userId }
         })
         //create empty array to store team objects consisting of id and name
         let faves = []
@@ -37,11 +39,12 @@ export function FavoritesContextProvider(props) {
     }
     //function to add favorite to mongoDB and favorites state
     async function handleAddFavorite(team) {
+        const userData = JSON.parse(localStorage.getItem("userData"))
         let response = await axios({
             method: 'post',
             url: '/favorites',
             data: { favorite: team },
-            headers: { 'Content-type': 'application/json', "Authorization": `Bearer ${authCtx.token}` }
+            headers: { 'Content-type': 'application/json', "Authorization": `Bearer ${authCtx.token}`, userId: userData.userId }
         });
         //create object to add new team to state
         let newTeam = response.data.favorite
@@ -49,11 +52,18 @@ export function FavoritesContextProvider(props) {
     }
     //function to delete favorite from mongoDB and favorites state
     async function handleDeleteFavorite(team) {
+        const userData = JSON.parse(localStorage.getItem("userData"))
+        let favoriteId
+        for (let i = 0; i < favorites.length; i++) {
+            if (favorites[i].name === team) {
+                favoriteId = favorites[i]._id
+            }
+        }
         let response = await axios({
             method: 'delete',
             url: '/favorites',
-            data: { favorite: team },
-            headers: { 'Content-type': 'application/json', "Authorization": `Bearer ${authCtx.token}` }
+            data: { favorite: team, teamId: favoriteId },
+            headers: { 'Content-type': 'application/json', "Authorization": `Bearer ${authCtx.token}`, userId: userData.userId }
         });
         //delete favorite from state
         setFavorites(prevFavorites => prevFavorites.filter(filterTeam => filterTeam.name !== team))
