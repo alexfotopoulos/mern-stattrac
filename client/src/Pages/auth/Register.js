@@ -25,7 +25,7 @@ export default function Register() {
                 <h3>Register</h3>
                 <div className="mb-3">
                     <label htmlFor="username" className="form-label">Username</label>
-                    <input ref={usernameRef} type="text" className="form-control" id="username" aria-describedby="emailHelp" />
+                    <input ref={usernameRef} type="text" className="form-control" id="username" aria-describedby="emailHelp" autoComplete="off" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>

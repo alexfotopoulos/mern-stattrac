@@ -1,5 +1,6 @@
 const Favorite = require("../models/Favorite");
 const User = require("../models/User");
+const HttpError = require("../models/HttpError")
 
 //controller to fetch all favorites
 const fetchFavorites = async (req, res, next) => {

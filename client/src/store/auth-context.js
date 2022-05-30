@@ -20,47 +20,49 @@ export function AuthContextProvider(props) {
 
     //function to handle registration of new user
     async function handleRegister(username, password) {
-        const response = await axios({
-            method: "post",
-            url: "/users/register",
-            data: JSON.stringify({
-                username,
-                password
-            }),
-            headers: { "Content-type": "application/json" }
-        });
-        console.log(response)
-        setToken(response.data.token)
-        setUserId(response.data.userId)
-        localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))
-        navigate("/", { replace: true })
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/users/register",
+                data: JSON.stringify({
+                    username,
+                    password
+                }),
+                headers: { "Content-type": "application/json" }
+            });
+            setToken(response.data.token)
+            setUserId(response.data.userId)
+            localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))
+            navigate("/", { replace: true })
+        } catch (err) {
+            alert(err.response.data)
+        }
     }
 
     //function to login of existing user
     async function handleLogin(username, password) {
-        const response = await axios({
-            method: "post",
-            url: "/users/login",
-            data: JSON.stringify({
-                username,
-                password
-            }),
-            headers: { "Content-type": "application/json" }
-        });
-        console.log(response)
-        setToken(response.data.token)
-        setUserId(response.data.userId)
-        localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))
-        navigate("/", { replace: true })
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/users/login",
+                data: JSON.stringify({
+                    username,
+                    password
+                }),
+                headers: { "Content-type": "application/json" }
+            });
+            console.log(response)
+            setToken(response.data.token)
+            setUserId(response.data.userId)
+            localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))
+            navigate("/", { replace: true })
+        } catch (err) {
+            alert(err.response.data)
+        }
     }
 
     //function to logout
     async function handleLogout() {
-        const response = await axios({
-            method: "post",
-            url: "/users/logout"
-        });
-        console.log(response)
         setToken(null)
         setUserId(null)
         localStorage.removeItem("userData")

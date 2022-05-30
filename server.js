@@ -7,6 +7,7 @@ const path = require("path")
 require("dotenv").config()
 const favoritesRoutes = require("./routes/favoritesRoutes")
 const usersRoutes = require("./routes/usersRoutes")
+const HttpError = require("./models/HttpError")
 
 const app = express()
 app.use(cors())
@@ -31,6 +32,17 @@ app.get("/playerData", async (req, res) => {
     //backend responds with data collected from fantasydata.com
     res.json(playerData)
 })
+
+//for any route that does match above
+app.use((req, res, next) => {
+    throw new HttpError("Could not find this route.", 404)
+});
+
+//customer error handler
+app.use((err, req, res, next) => {
+    const { status = 500, message = "An unknown error occurred" } = err;
+    res.status(status).send(message);
+});
 
 //serve static assets if in production
 if (process.env.NODE_ENV === "production") {
