@@ -74,9 +74,6 @@ export default function Nav() {
                         <li className="nav-item">
                             <a className="nav-link" href="https://www.pro-football-reference.com/" target="_blank">Pro Football Reference</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="https://www.nfl.com/" rel="noreferrer" target="_blank">NFL.com</a>
-                        </li>
                     </ul>
                     <ul className="navbar-nav Nav-authButtons">
                         {!authCtx.token && <li className="nav-item">

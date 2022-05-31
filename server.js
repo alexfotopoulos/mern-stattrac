@@ -20,7 +20,7 @@ const fetchPlayerData = async () => {
     //save response data to playerData array
     playerData = response.data
 };
-// fetchPlayerData();
+fetchPlayerData();
 
 app.use(express.json())
 

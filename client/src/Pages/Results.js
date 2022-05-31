@@ -53,41 +53,43 @@ export default function Results() {
     //map over returned players
     let content
     if (players.length === 0) {
-        content = <tr><td><p>no results found</p></td></tr>
+        content = <h2>Team not found</h2>
     } else {
-        content = players.map(player => (
-            <Player key={Math.random()} player={player} />
-        ))
+        content = (
+            <div className="Results">
+                <div className="Results-header mb-3">
+                    <h2 >{params.collegeTeam.toUpperCase()}</h2>
+                    {authCtx.token && <div className="form-check">
+                        <input className="form-check-input" onChange={toggleFavorite} type="checkbox" value={isFavorite} id="flexCheckDefault" checked={isFavorite} />
+                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                            {isFavorite ? "Remove from favorites" : "Add to favorites"}
+                        </label>
+                    </div>}
+                </div>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th >Name</th>
+                            <th >Team</th>
+                            <th >Position</th>
+                            <th >Experience</th>
+                            <th >Status</th>
+                            <th >News</th>
+                            <th >Stats</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {players.map(player => (
+                            <Player key={Math.random()} player={player} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        )
     }
 
 
     return (
-        <div className="Results">
-            <div className="Results-header mb-3">
-                <h2 >{params.collegeTeam.toUpperCase()}</h2>
-                {authCtx.token && <div className="form-check">
-                    <input className="form-check-input" onChange={toggleFavorite} type="checkbox" value={isFavorite} id="flexCheckDefault" checked={isFavorite} />
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                        {isFavorite ? "Remove from favorites" : "Add to favorites"}
-                    </label>
-                </div>}
-            </div>
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th >Name</th>
-                        <th >Team</th>
-                        <th >Position</th>
-                        <th >Experience</th>
-                        <th >Status</th>
-                        <th >News</th>
-                        <th >Stats</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                </tbody>
-            </table>
-        </div>
+        content
     )
 }
