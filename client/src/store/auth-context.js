@@ -51,7 +51,6 @@ export function AuthContextProvider(props) {
                 }),
                 headers: { "Content-type": "application/json" }
             });
-            console.log(response)
             setToken(response.data.token)
             setUserId(response.data.userId)
             localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))

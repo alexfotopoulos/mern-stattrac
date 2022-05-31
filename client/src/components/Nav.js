@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react"
-import axios from "axios"
 import { Link } from "react-router-dom"
 import "./Nav.css"
 import FavoritesContext from "../store/favorites-context"
@@ -76,7 +75,7 @@ export default function Nav() {
                             <a className="nav-link" href="https://www.pro-football-reference.com/" target="_blank">Pro Football Reference</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="https://www.nfl.com/" target="_blank">NFL.com</a>
+                            <a className="nav-link" href="https://www.nfl.com/" rel="noreferrer" target="_blank">NFL.com</a>
                         </li>
                     </ul>
                     <ul className="navbar-nav Nav-authButtons">
@@ -91,7 +90,7 @@ export default function Nav() {
                         </li>}
                     </ul>
                     <div id="toggleSwitch" onClick={toggleMode} className="form-check form-switch">
-                        <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={isDarkMode} />
+                        <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" defaultChecked={isDarkMode} />
                         <label className="form-check-label" htmlFor="flexSwitchCheckChecked">Dark Mode</label>
                     </div>
                 </div>
