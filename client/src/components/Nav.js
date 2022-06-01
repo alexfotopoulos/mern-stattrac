@@ -66,7 +66,7 @@ export default function Nav() {
     return (
         <nav className={`navbar navbar-expand-md navbar-${themeCtx.theme === "light" ? "light" : "dark"} bg-${themeCtx.theme === "light" ? "light" : "dark"} sticky-top mb-4`}>
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">Stattrac</Link>
+                <Link onClick={handleCollapseMenu} className="navbar-brand" to="/">Stattrac</Link>
                 <button className={isCollapsed ? "navbar-toggler collapsed" : "navbar-toggler"} onClick={handleShowMenu} type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

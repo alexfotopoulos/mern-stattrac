@@ -4,6 +4,10 @@
     align-items: center;
 }
 
+.Results {
+    overflow-x: scroll;
+}
+
 #dark .table {
     color: white
 }

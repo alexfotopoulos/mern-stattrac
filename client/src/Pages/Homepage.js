@@ -28,12 +28,16 @@ export default function Homepage() {
         <Team team={team} key={team} />))
 
     return (
-        <div className="Homepage">
-            <h1>Welcome to Stattrac!</h1>
-            <p>Search for a school to view their current NFL players</p>
-            <input className="Homepage-input mb-3" onChange={event => setSearchTerm(event.target.value)} type="text" placeholder="Search college..." />
-            <div className="Homepage-searchResults">
-                {showTeams}
+        <div className="row justify-content-center">
+            <div className="col">
+                <div className="Homepage">
+                    <h1>Welcome to Stattrac</h1>
+                    <p>Search for a school to view their current NFL players</p>
+                    <input className="Homepage-input mb-3" onChange={event => setSearchTerm(event.target.value)} type="text" placeholder="Search college..." />
+                    <div className="Homepage-searchResults">
+                        {showTeams}
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -53,7 +53,7 @@ export default function Results() {
     //map over returned players
     let content
     if (players.length === 0) {
-        content = <h2>Team not found</h2>
+        content = <h2 className="text-center mt-5">Team Not Found</h2>
     } else {
         content = (
             <div className="Results">
@@ -90,6 +90,10 @@ export default function Results() {
 
 
     return (
-        content
+        <div className="row">
+            <div className="col">
+                {content}
+            </div>
+        </div>
     )
 }
