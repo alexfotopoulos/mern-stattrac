@@ -1,24 +1,24 @@
-import React, { useRef, useContext } from "react"
-import AuthContext from "../../store/auth-context"
-import "./Register.css"
+import React, { useRef, useContext } from "react";
+import AuthContext from "../../store/auth-context";
+import "./Register.css";
 
 export default function Register() {
     //apply ref to username and password
-    const usernameRef = useRef()
-    const passwordRef = useRef()
+    const usernameRef = useRef();
+    const passwordRef = useRef();
 
     //consume auth context
-    const authCtx = useContext(AuthContext)
+    const authCtx = useContext(AuthContext);
 
     //function to register a new user
     async function register(evt) {
-        evt.preventDefault()
-        const username = usernameRef.current.value
-        const password = passwordRef.current.value
-        authCtx.register(username, password)
-        usernameRef.current.value = ""
-        passwordRef.current.value = ""
-    }
+        evt.preventDefault();
+        const username = usernameRef.current.value;
+        const password = passwordRef.current.value;
+        authCtx.register(username, password);
+        usernameRef.current.value = "";
+        passwordRef.current.value = "";
+    };
 
     return (
         <div className="row justify-content-center Register">
@@ -37,5 +37,5 @@ export default function Register() {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};

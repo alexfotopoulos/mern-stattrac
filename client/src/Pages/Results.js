@@ -1,59 +1,59 @@
-import React, { useEffect, useState, useContext } from "react"
-import "./Results.css"
-import { useParams } from "react-router-dom"
-import { fetchPlayerData } from "../helpers"
-import Player from "../components/Player"
-import FavoritesContext from "../store/favorites-context"
-import AuthContext from "../store/auth-context"
+import React, { useEffect, useState, useContext } from "react";
+import "./Results.css";
+import { useParams } from "react-router-dom";
+import { fetchPlayerData } from "../helpers";
+import Player from "../components/Player";
+import FavoritesContext from "../store/favorites-context";
+import AuthContext from "../store/auth-context";
 
 export default function Results() {
     //consume auth context
-    const authCtx = useContext(AuthContext)
+    const authCtx = useContext(AuthContext);
     //consume favorites context
-    const favoritesCtx = useContext(FavoritesContext)
+    const favoritesCtx = useContext(FavoritesContext);
     //create empty array for players
-    const [players, setPlayers] = useState([])
+    const [players, setPlayers] = useState([]);
     //useParams to store the selected school
-    const params = useParams()
+    const params = useParams();
     //state to track whether the current team is favorited
-    const [isFavorite, setIsFavorite] = useState(false)
+    const [isFavorite, setIsFavorite] = useState(false);
 
 
     //call backend API to fetch players from the selected school
     useEffect(() => {
         async function getData() {
-            let teamPlayers = await fetchPlayerData(params.collegeTeam)
-            setPlayers(teamPlayers)
-        }
-        getData()
-    }, [favoritesCtx.refresh])
+            let teamPlayers = await fetchPlayerData(params.collegeTeam);
+            setPlayers(teamPlayers);
+        };
+        getData();
+    }, [favoritesCtx.refresh]);
     //determine whether the current team is favorited is user is logged in
     useEffect(() => {
         if (authCtx.token) {
-            let favorited = false
+            let favorited = false;
             for (let i = 0; i < favoritesCtx.favorites.length; i++) {
                 if (favoritesCtx.favorites[i].name === params.collegeTeam) {
-                    favorited = true
-                }
-            }
-            setIsFavorite(favorited)
-        }
-    }, [favoritesCtx.favorites, favoritesCtx.refresh])
+                    favorited = true;
+                };
+            };
+            setIsFavorite(favorited);
+        };
+    }, [favoritesCtx.favorites, favoritesCtx.refresh]);
 
     //toggle whether team is favorited
     function toggleFavorite() {
         if (!isFavorite) {
-            favoritesCtx.addFavorite(params.collegeTeam)
+            favoritesCtx.addFavorite(params.collegeTeam);
         } else {
-            favoritesCtx.deleteFavorite(params.collegeTeam)
-        }
-    }
+            favoritesCtx.deleteFavorite(params.collegeTeam);
+        };
+    };
 
 
     //map over returned players
-    let content
+    let content;
     if (players.length === 0) {
-        content = <h2 className="text-center mt-5">Team Not Found</h2>
+        content = <h2 className="text-center mt-5">Team Not Found</h2>;
     } else {
         content = (
             <div className="Results">
@@ -85,8 +85,8 @@ export default function Results() {
                     </tbody>
                 </table>
             </div>
-        )
-    }
+        );
+    };
 
 
     return (
@@ -95,5 +95,5 @@ export default function Results() {
                 {content}
             </div>
         </div>
-    )
-}
+    );
+};

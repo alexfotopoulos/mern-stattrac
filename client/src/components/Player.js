@@ -1,6 +1,6 @@
-import React from "react"
-import "./Player.css"
-import { teamPairs } from "../helpers"
+import React from "react";
+import "./Player.css";
+import { teamPairs } from "../helpers";
 
 export default function Player({ player }) {
   return (
@@ -13,5 +13,5 @@ export default function Player({ player }) {
       <td><a href={`https://www.google.com/search?q=${player.firstName}+${player.lastName}&tbm=nws`} target="_blank">News</a></td>
       <td><a href={`https://www.pro-football-reference.com/teams/${teamPairs[player.team]}/2021.htm`} target="_blank">Stats</a></td>
     </tr >
-  )
-}
+  );
+};

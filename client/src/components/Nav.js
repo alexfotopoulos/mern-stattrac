@@ -1,68 +1,68 @@
-import React, { useContext, useState } from "react"
-import { Link } from "react-router-dom"
-import "./Nav.css"
-import FavoritesContext from "../store/favorites-context"
-import ThemeContext from "../store/theme-context"
-import AuthContext from "../store/auth-context"
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import "./Nav.css";
+import FavoritesContext from "../store/favorites-context";
+import ThemeContext from "../store/theme-context";
+import AuthContext from "../store/auth-context";
 
 export default function Nav() {
     //consume auth context
-    const authCtx = useContext(AuthContext)
+    const authCtx = useContext(AuthContext);
 
     //consume favorites context
-    const favoritesCtx = useContext(FavoritesContext)
+    const favoritesCtx = useContext(FavoritesContext);
 
     //consume theme context
-    const themeCtx = useContext(ThemeContext)
+    const themeCtx = useContext(ThemeContext);
 
     //state to determine toggle light or dark
-    const [isDarkMode, setIsDarkMode] = useState(null)
+    const [isDarkMode, setIsDarkMode] = useState(null);
 
     //state to handle toggling of navbar menu
-    const [isCollapsed, setIsCollapsed] = useState(true)
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
     //change refresh in favorite context so Results page will refresh when switching favorites from nav bar
     function handleToggleRefresh() {
-        favoritesCtx.toggleRefresh()
-        setIsCollapsed(true)
-    }
+        favoritesCtx.toggleRefresh();
+        setIsCollapsed(true);
+    };
 
     //function to toggle navbar menu collapse
     function handleCollapseMenu() {
-        setIsCollapsed(true)
-    }
+        setIsCollapsed(true);
+    };
     function handleShowMenu() {
-        setIsCollapsed(false)
-    }
+        setIsCollapsed(false);
+    };
     //function to toggle light/dark mode
     function toggleMode() {
         if (themeCtx.theme === "dark") {
-            setIsDarkMode(false)
+            setIsDarkMode(false);
 
         } else {
-            setIsDarkMode(true)
-        }
-        themeCtx.toggleTheme()
-    }
+            setIsDarkMode(true);
+        };
+        themeCtx.toggleTheme();
+    };
 
     //function to log user out
     async function logout() {
-        authCtx.logout()
-    }
+        authCtx.logout();
+    };
 
     //create Links in dropdown for favorited teams
-    let content
+    let content;
     if (!authCtx.token) {
-        content = <li className="dropdownLink">Login to add favorites</li>
+        content = <li className="dropdownLink">Login to add favorites</li>;
     } else {
         if (favoritesCtx.favorites.length === 0) {
-            content = <li className="dropdownLink">You have no favorites</li>
+            content = <li className="dropdownLink">You have no favorites</li>;
         } else {
             content = favoritesCtx.favorites.map(team => (
                 <Link className="dropdownLink" onClick={handleToggleRefresh} key={team._id} to={`/teams/${team.name}`}>{team.name}</Link>
-            ))
-        }
-    }
+            ));
+        };
+    };
     return (
         <nav className={`navbar navbar-expand-md navbar-${themeCtx.theme === "light" ? "light" : "dark"} bg-${themeCtx.theme === "light" ? "light" : "dark"} sticky-top mb-4`}>
             <div className="container-fluid">
@@ -104,5 +104,5 @@ export default function Nav() {
                 </div>
             </div>
         </nav>
-    )
-}
+    );
+};

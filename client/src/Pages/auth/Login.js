@@ -1,24 +1,24 @@
-import React, { useRef, useContext } from "react"
-import AuthContext from "../../store/auth-context"
-import "./Login.css"
+import React, { useRef, useContext } from "react";
+import AuthContext from "../../store/auth-context";
+import "./Login.css";
 
 export default function Login() {
     //apply ref to username and password
-    const usernameRef = useRef()
-    const passwordRef = useRef()
+    const usernameRef = useRef();
+    const passwordRef = useRef();
 
     //consume auth context
-    const authCtx = useContext(AuthContext)
+    const authCtx = useContext(AuthContext);
 
     //function to login an existing user
     async function login(evt) {
-        evt.preventDefault()
-        const username = usernameRef.current.value
-        const password = passwordRef.current.value
-        authCtx.login(username, password)
-        usernameRef.current.value = ""
-        passwordRef.current.value = ""
-    }
+        evt.preventDefault();
+        const username = usernameRef.current.value;
+        const password = passwordRef.current.value;
+        authCtx.login(username, password);
+        usernameRef.current.value = "";
+        passwordRef.current.value = "";
+    };
 
     return (
         <div className="row justify-content-center Login">
@@ -37,5 +37,5 @@ export default function Login() {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};

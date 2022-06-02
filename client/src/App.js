@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
 import Nav from "./components/Nav";
@@ -13,21 +13,21 @@ import AuthContext from "./store/auth-context";
 
 export default function App() {
   //consume auth context
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
   //consume favorites context
-  const favoritesCtx = useContext(FavoritesContext)
+  const favoritesCtx = useContext(FavoritesContext);
   // consume theme context
-  const themeCtx = useContext(ThemeContext)
+  const themeCtx = useContext(ThemeContext);
 
   //check if user should be logged and fetch favorites if so
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"))
+    const storedData = JSON.parse(localStorage.getItem("userData"));
     if (storedData && storedData.token) {
-      authCtx.token = storedData.token
-      authCtx.userId = storedData.userId
-      favoritesCtx.fetchFavorites()
-    }
-  }, [authCtx.token])
+      authCtx.token = storedData.token;
+      authCtx.userId = storedData.userId;
+      favoritesCtx.fetchFavorites();
+    };
+  }, [authCtx.token]);
 
 
   return (
@@ -44,4 +44,4 @@ export default function App() {
       </div>
     </div>
   );
-}
+};

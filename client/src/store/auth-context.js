@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
-import axios from "axios"
-import { useNavigate } from "react-router";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({
     token: false,
@@ -12,11 +12,11 @@ const AuthContext = createContext({
 
 export function AuthContextProvider(props) {
     //state to store token and userId
-    const [token, setToken] = useState(false)
-    const [userId, setUserId] = useState(false)
+    const [token, setToken] = useState(false);
+    const [userId, setUserId] = useState(false);
 
     //useNavigate to redirect after register/login/logout
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     //function to handle registration of new user
     async function handleRegister(username, password) {
@@ -30,14 +30,14 @@ export function AuthContextProvider(props) {
                 }),
                 headers: { "Content-type": "application/json" }
             });
-            setToken(response.data.token)
-            setUserId(response.data.userId)
-            localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))
-            navigate("/", { replace: true })
+            setToken(response.data.token);
+            setUserId(response.data.userId);
+            localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }));
+            navigate("/", { replace: true });
         } catch (err) {
-            alert(err.response.data)
-        }
-    }
+            alert(err.response.data);
+        };
+    };
 
     //function to login of existing user
     async function handleLogin(username, password) {
@@ -51,21 +51,21 @@ export function AuthContextProvider(props) {
                 }),
                 headers: { "Content-type": "application/json" }
             });
-            setToken(response.data.token)
-            setUserId(response.data.userId)
-            localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }))
-            navigate("/", { replace: true })
+            setToken(response.data.token);
+            setUserId(response.data.userId);
+            localStorage.setItem("userData", JSON.stringify({ userId: response.data.userId, token: response.data.token }));
+            navigate("/", { replace: true });
         } catch (err) {
-            alert(err.response.data)
-        }
-    }
+            alert(err.response.data);
+        };
+    };
 
     //function to logout
     async function handleLogout() {
-        setToken(null)
-        setUserId(null)
-        localStorage.removeItem("userData")
-    }
+        setToken(null);
+        setUserId(null);
+        localStorage.removeItem("userData");
+    };
 
     //context to be provided to children
     const context = {
@@ -74,9 +74,9 @@ export function AuthContextProvider(props) {
         register: handleRegister,
         login: handleLogin,
         logout: handleLogout
-    }
+    };
 
     return <AuthContext.Provider value={context}>{props.children}</AuthContext.Provider>
-}
+};
 
-export default AuthContext
+export default AuthContext;
