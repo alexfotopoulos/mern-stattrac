@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Live link
 
-THe deployed demo of Stattrac can be found <a href="https://foto-stattrac.herokuapp.com/" target="_blank" rel="noreferrer">here</a>.
+The deployed demo of Stattrac can be found <a href="https://foto-stattrac.herokuapp.com/" target="_blank" rel="noreferrer">here</a>.
 
 ## Description
 
